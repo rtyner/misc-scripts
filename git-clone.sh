@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd ~/projects
 git clone git@github.com:rtyner/mediawiki-backup.git
 git clone git@github.com:rtyner/mac_convert.git
 git clone git@github.com:rtyner/cidr-calc.git
