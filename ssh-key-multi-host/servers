@@ -1,0 +1,4 @@
+#drop your servers in this file, either IP or FQDN
+
+server.domain.com
+0.0.0.0
