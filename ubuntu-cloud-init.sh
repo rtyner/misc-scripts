@@ -7,6 +7,7 @@ USERNAME=rt
 COPY_AUTHORIZED_KEYS_FROM_ROOT=true
 
 useradd --create-home --shell "/bin/bash" --groups sudo "${USERNAME}"
+usermod -aG docker rt
 
 # Copy `authorized_keys` file from root if requested
 if [ "${COPY_AUTHORIZED_KEYS_FROM_ROOT}" = true ]; then
@@ -24,10 +25,6 @@ if sshd -t -q; then
     systemctl restart sshd
 fi
 
-# Add exception for SSH and then enable UFW firewall
-ufw allow OpenSSH
-ufw --force enable
-
 # mkdir 
 mkdir /home/rt/working
 chown rt:rt /home/rt/working
@@ -39,10 +36,10 @@ timedatectl set-timezone America/New_York
 apt-get update -y && apt-get upgrade -y
 
 # install utils
-sudo apt-get install wget curl git gpg vim unzip dnsutils  -y 
+sudo apt-get install wget curl git gpg vim unzip dnsutils htop python3-pip python3-setuptools build-essential glances rclone rsync -y 
 
 #install tailscale
 curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.gpg | sudo apt-key add -
 curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.list | sudo tee /etc/apt/sources.list.d/tailscale.list
 sudo apt-get update
-sudo apt-get install tailscale
+sudo apt-get install tailscale -y
