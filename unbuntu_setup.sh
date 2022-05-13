@@ -4,9 +4,6 @@ set -euo pipefail
 # new user
 USERNAME=rt
 
-# copy root keys
-COPY_AUTHORIZED_KEYS_FROM_ROOT=true
-
 # Additional public keys to add to the new sudo user
  OTHER_PUBLIC_KEYS_TO_ADD=(
      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLT0szO1EJOO2QtsyZTbeuCPb3lxuQvdYmrlusIhrM3g5MhdFCsvcF5Ya60TXs+CPsTPJ0XJJmc32qDMljCmk54= rt@rt-desktop"
