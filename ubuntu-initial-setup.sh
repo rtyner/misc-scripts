@@ -6,7 +6,7 @@ HOME=/home/${USER}
 PUBKEY="ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLT0szO1EJOO2QtsyZTbeuCPb3lxuQvdYmrlusIhrM3g5MhdFCsvcF5Ya60TXs+CPsTPJ0XJJmc32qDMljCmk54= rt@rt-desktop"
 
 #make user and dirs
-useradd --create-home --shell "/bin/bash"
+useradd --create-home ${USER} --shell "/bin/bash"
 usermod -aG sudo ${USER}
 mkdir ${HOME}/.ssh/
 
@@ -14,6 +14,7 @@ mkdir ${HOME}/.ssh/
 chmod 0700 "${HOME}/.ssh"
 chmod 0600 "${HOME}/.ssh/authorized_keys"
 chown -R ${USER}:${USER} ${HOME}/.ssh/
+touch "${HOME}/.ssh/authorized_keys"
 echo $PUBKEY >> {${HOME}}/.ssh/authorized_keys
 
 #disable root login
