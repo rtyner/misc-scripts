@@ -136,11 +136,16 @@ fi
 apt autoremove -v 
 apt clean -v 
 
-echo " Do you want to reboot now? y / n"
+echo " 
+##################################
+Do you want to reboot now? y / n
+##################################
+"
 read $reboot
-
-if [[ $reboot -eq "y" ]] || [[ $reboot -eq "yes" ]]; then
-    sudo reboot
+if [[ $reboot -eq "y" ]] || [[ $reboot -eq "yes" ]] ; then 
+    reboot
+else 
+    echo "Reboot was not initiated"
 fi
 
 exit 0
