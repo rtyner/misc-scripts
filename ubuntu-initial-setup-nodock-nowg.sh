@@ -1,5 +1,5 @@
 #!/bin/bash
-rt      ALL=(ALL) NOPASSWD: ALL
+
 #vars
 USER=rt
 HOME=/home/${USER}
