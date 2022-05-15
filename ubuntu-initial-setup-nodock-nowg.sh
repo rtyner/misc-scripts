@@ -1,5 +1,5 @@
 #!/bin/bash
-
+rt      ALL=(ALL) NOPASSWD: ALL
 #vars
 USER=rt
 HOME=/home/${USER}
@@ -16,6 +16,9 @@ chmod 0600 "${HOME}/.ssh/authorized_keys"
 chown -R ${USER}:${USER} ${HOME}/.ssh/
 touch "${HOME}/.ssh/authorized_keys"
 echo $PUBKEY >> ${HOME}/.ssh/authorized_keys && chown ${USER}:${USER} ${HOME}/.ssh/authorized_keys
+
+#nopasswd for user
+sed -i -e 's/${USER} ALL=(ALL) ALL/${USER} ALL=NOPASSWD:ALL/g' /etc/sudoers
 
 #disable root login
 echo "PermitRootLogin no" >> /etc/ssh/sshd_config 
@@ -38,6 +41,9 @@ echo "Unattended-Upgrade::Allowed-Origins {
 
 #timezone
 ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
+
+#bashrc
+wget https://raw.githubusercontent.com/rtyner/dotfiles/master/.bashrc -O ${HOME}/.bashrc
 
 #update and install
 apt-get update -y && apt-get upgrade -y
