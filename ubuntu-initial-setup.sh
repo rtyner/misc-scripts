@@ -15,7 +15,7 @@ chmod 0700 "${HOME}/.ssh"
 chmod 0600 "${HOME}/.ssh/authorized_keys"
 chown -R ${USER}:${USER} ${HOME}/.ssh/
 touch "${HOME}/.ssh/authorized_keys"
-echo $PUBKEY >> {${HOME}}/.ssh/authorized_keys && chown ${USER}:${USER} ${HOME}/.ssh/authorized_keys
+echo $PUBKEY >> ${HOME}/.ssh/authorized_keys && chown ${USER}:${USER} ${HOME}/.ssh/authorized_keys
 
 #disable root login
 echo "PermitRootLogin no" >> /etc/ssh/sshd_config 
