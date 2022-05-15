@@ -18,7 +18,6 @@ touch "${HOME}/.ssh/authorized_keys"
 echo $PUBKEY >> {${HOME}}/.ssh/authorized_keys && chown ${USER}:${USER} ${HOME}/.ssh/authorized_keys
 
 #disable root login
-# Disabling root login 
 echo "PermitRootLogin no" >> /etc/ssh/sshd_config 
 echo "PermitEmptyPasswords no" /etc/ssh/sshd_config
 
@@ -63,7 +62,7 @@ curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.list | sudo tee /etc/a
 sudo apt-get update
 sudo apt-get install tailscale
 
-# Ffail2ban install
+# fail2ban install
 sudo apt-get install -y fail2ban
 sudo systemctl start fail2ban
 sudo systemctl enable fail2ban
