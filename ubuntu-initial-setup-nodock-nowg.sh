@@ -7,7 +7,7 @@ PUBKEY="ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABB
 
 #make user and dirs
 useradd --create-home ${USER} --shell "/bin/bash"
-usermod -aG sudo ${USER}
+usermod -aG sudo, docker ${USER}
 mkdir ${HOME}/.ssh/
 
 #ssh config
