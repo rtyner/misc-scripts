@@ -97,7 +97,7 @@ if [[ $docker -eq "y" ]] || [[ $docker -eq "yes" ]]; then
     
         Installing Portainer on port 9000
     "
-    
+
     sudo docker volume create portainer_data
     sudo docker run -d -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
 
@@ -135,5 +135,12 @@ fi
 #clean
 apt autoremove -v 
 apt clean -v 
+
+echo " Do you want to reboot now? y / n"
+read $reboot
+
+if [[ $reboot -eq "y" ]] || [[ $reboot -eq "yes" ]]; then
+    sudo reboot
+fi
 
 exit 0
