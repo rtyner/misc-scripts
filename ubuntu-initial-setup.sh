@@ -3,7 +3,7 @@
 #vars
 USER=rt
 HOME=/home/${USER}
-PUBKEY="ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLT0szO1EJOO2QtsyZTbeuCPb3lxuQvdYmrlusIhrM3g5MhdFCsvcF5Ya60TXs+CPsTPJ0XJJmc32qDMljCmk54= rt@rt-desktop"
+PUBKEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOexRWaRt+sGaH/edtNHmaTGxsQQxwxw0z/5VsAos3RJ rt@DESKTOP-3U6QGH9"
 
 #make user and dirs
 useradd --create-home ${USER} --shell "/bin/bash"
@@ -81,6 +81,17 @@ filter = sshd
 logpath = /var/log/auth.log
 maxretry = 4
 " >> /etc/fail2ban/jail.local
+
+# change hostname
+echo " 
+#######################
+What is the hostname of this system?
+#######################
+"
+read $hostname
+sed -i 's/localhost/${hostname}/g' /etc/hosts
+echo $hostname > /etc/hostname 
+
 
 # docker install
 echo "
