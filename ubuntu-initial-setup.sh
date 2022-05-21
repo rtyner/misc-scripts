@@ -5,9 +5,6 @@ USER=rt
 HOME=/home/${USER}
 PUBKEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOexRWaRt+sGaH/edtNHmaTGxsQQxwxw0z/5VsAos3RJ rt@DESKTOP-3U6QGH9"
 
-# install sudo
-apt-get install sudo -y
-
 #make user and dirs
 useradd --create-home ${USER} --shell "/bin/bash"
 usermod -aG sudo ${USER}
@@ -71,6 +68,11 @@ curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.list | sudo tee /etc/a
 sudo apt-get update
 sudo apt-get install tailscale
 
+# qemu-gust-agent install
+apt-get install qemu-guest-agent -y
+systemctl enable qemu-guest-agent
+systemctl start qemu-guest-agent
+
 # fail2ban install
 sudo apt-get install -y fail2ban
 sudo systemctl start fail2ban
@@ -92,8 +94,8 @@ What is the hostname of this system?
 #######################
 "
 read $hostname
-sed -i 's/localhost/${hostname}/g' /etc/hosts
-echo $hostname > /etc/hostname 
+sed -i 's/ubuntu/${hostname}/g' /etc/hosts
+sed -i 's/ubuntu/${hostname}/g' /etc/hostname
 
 
 # docker install
