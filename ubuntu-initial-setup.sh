@@ -25,12 +25,12 @@ echo "PermitRootLogin no" >> /etc/ssh/sshd_config
 echo "PermitEmptyPasswords no" /etc/ssh/sshd_config
 
 # Message of the day 
-sudo wget https://raw.githubusercontent.com/jwandrews99/Linux-Automation/master/misc/motd.sh
-sudo mv motd.sh /etc/update-motd.d/05-info
-sudo chmod +x /etc/update-motd.d/05-info
+wget https://raw.githubusercontent.com/jwandrews99/Linux-Automation/master/misc/motd.sh
+mv motd.sh /etc/update-motd.d/05-info
+chmod +x /etc/update-motd.d/05-info
 
 # Automatic downloads of security updates
-sudo apt-get install -y unattended-upgrades
+apt-get install -y unattended-upgrades
 echo "Unattended-Upgrade::Allowed-Origins {
 #   "${distro_id}:${distro_codename}-security";
 #//  "${distro_id}:${distro_codename}-updates";
@@ -47,8 +47,9 @@ wget https://raw.githubusercontent.com/rtyner/dotfiles/master/.bashrc -O ${HOME}
 
 #update and install
 apt-get update -y && apt-get upgrade -y
-sudo apt install -y \
-	vim \
+apt install -y \
+	sudo \
+    vim \
 	git \
 	curl \
 	htop \
