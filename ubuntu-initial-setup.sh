@@ -9,16 +9,17 @@ PUBKEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOexRWaRt+sGaH/edtNHmaTGxsQQxwxw0z/5
 useradd --create-home ${USER} --shell "/bin/bash"
 usermod -aG sudo ${USER}
 mkdir ${HOME}/.ssh/
+mkdir "${HOME}/.ssh/authorized_keys"
 
 #ssh config
-chmod 0700 "${HOME}/.ssh"
+chmod 0700 "${HOME}/.ssh" 
 chmod 0600 "${HOME}/.ssh/authorized_keys"
 chown -R ${USER}:${USER} ${HOME}/.ssh/
 touch "${HOME}/.ssh/authorized_keys"
 echo $PUBKEY >> ${HOME}/.ssh/authorized_keys && chown ${USER}:${USER} ${HOME}/.ssh/authorized_keys
 
 #nopasswd for user
-sed -i -e 's/${USER} ALL=(ALL) ALL/${USER} ALL=NOPASSWD:ALL/g' /etc/sudoers
+echo "rt  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/rt
 
 #disable root login
 echo "PermitRootLogin no" >> /etc/ssh/sshd_config 
@@ -27,12 +28,12 @@ echo "PermitEmptyPasswords no" /etc/ssh/sshd_config
 # Message of the day 
 wget https://raw.githubusercontent.com/jwandrews99/Linux-Automation/master/misc/motd.sh
 mv motd.sh /etc/update-motd.d/05-info
-chmod +x /etc/update-motd.d/05-info
+hmod +x /etc/update-motd.d/05-info
 
 # Automatic downloads of security updates
 apt-get install -y unattended-upgrades
 echo "Unattended-Upgrade::Allowed-Origins {
-#   "${distro_id}:${distro_codename}-security";
+#    "${distro_id}:${distro_codename}-security";
 #//  "${distro_id}:${distro_codename}-updates";
 #//  "${distro_id}:${distro_codename}-proposed";
 #//  "${distro_id}:${distro_codename}-backports";
@@ -49,12 +50,12 @@ wget https://raw.githubusercontent.com/rtyner/dotfiles/master/.bashrc -O ${HOME}
 apt-get update -y && apt-get upgrade -y
 apt install -y \
     vim \
-	git \
-	curl \
-	htop \
-	unzip \
-	python3-pip \
-	python3-setuptools \
+    git \
+    curl \
+    htop \
+    unzip \
+    python3-pip \
+    python3-setuptools \
     build-essential \
     rclone \
     rsync \
@@ -74,18 +75,18 @@ systemctl enable qemu-guest-agent
 systemctl start qemu-guest-agent
 
 # fail2ban install
-sudo apt-get install -y fail2ban
-sudo systemctl start fail2ban
-sudo systemctl enable fail2ban
+apt-get install -y fail2ban
+systemctl start fail2ban
+systemctl enable fail2ban
 
-echo "
-[sshd]
-enabled = true
-port = 22
-filter = sshd
-logpath = /var/log/auth.log
-maxretry = 4
-" >> /etc/fail2ban/jail.local
+sudo echo "
+        [sshd]
+        enabled = true
+        port = 22
+        filter = sshd
+        logpath = /var/log/auth.log
+        maxretry = 4
+        " >> /etc/fail2ban/jail.local
 
 # change hostname
 echo " 
@@ -93,9 +94,9 @@ echo "
 What is the hostname of this system?
 #######################
 "
-read $hostname
-sed -i 's/ubuntu/${hostname}/g' /etc/hosts
-sed -i 's/ubuntu/${hostname}/g' /etc/hostname
+read hostname
+sed -i 's/ubuntu/$hostname/g' /etc/hosts
+sed -i 's/ubuntu/$hostname/g' /etc/hostname
 
 
 # docker install
@@ -104,14 +105,14 @@ echo "
 Do you want to install docker? If so type y / If you dont want to install enter n
 ######################################################################################################
 "
-read $docker
+read docker
 
 if [[ $docker -eq "y" ]] || [[ $docker -eq "yes" ]]; then
     sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
     sudo apt-get update -y
-    apt-cache policy docker-ce
+    sudo apt-cache policy docker-ce
     sudo apt install docker-ce -y
     sudo apt-get install docker-compose -y 
     sudo usermod -aG docker ${USER}
@@ -137,7 +138,7 @@ echo "
 Do you want to reboot now? y / n
 ##################################
 "
-read $reboot
+read reboot
 if [[ $reboot -eq "y" ]] || [[ $reboot -eq "yes" ]] ; then 
     reboot
 else 
