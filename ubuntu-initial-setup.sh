@@ -8,14 +8,13 @@ PUBKEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOexRWaRt+sGaH/edtNHmaTGxsQQxwxw0z/5
 #make user and dirs
 useradd --create-home ${USER} --shell "/bin/bash"
 usermod -aG sudo ${USER}
-mkdir ${HOME}/.ssh/
-mkdir "${HOME}/.ssh/authorized_keys"
 
 #ssh config
-chmod 0700 "${HOME}/.ssh" 
-chmod 0600 "${HOME}/.ssh/authorized_keys"
+mkdir ${HOME}/.ssh/
 chown -R ${USER}:${USER} ${HOME}/.ssh/
 touch "${HOME}/.ssh/authorized_keys"
+chmod 0700 "${HOME}/.ssh" 
+chmod 0600 "${HOME}/.ssh/authorized_keys"
 echo $PUBKEY >> ${HOME}/.ssh/authorized_keys && chown ${USER}:${USER} ${HOME}/.ssh/authorized_keys
 
 #nopasswd for user
@@ -28,7 +27,7 @@ echo "PermitEmptyPasswords no" /etc/ssh/sshd_config
 # Message of the day 
 wget https://raw.githubusercontent.com/jwandrews99/Linux-Automation/master/misc/motd.sh
 mv motd.sh /etc/update-motd.d/05-info
-hmod +x /etc/update-motd.d/05-info
+chmod +x /etc/update-motd.d/05-info
 
 # Automatic downloads of security updates
 apt-get install -y unattended-upgrades
@@ -60,7 +59,7 @@ apt install -y \
     rclone \
     rsync \
     gpg \
-    dnsutils \
+    dnsutils
 
 # tailscale install
 curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.gpg | sudo apt-key add -
