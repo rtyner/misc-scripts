@@ -61,7 +61,6 @@ apt install -y \
     rsync \
     gpg \
     dnsutils \
-    glances 
 
 # tailscale install
 curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.gpg | sudo apt-key add -
