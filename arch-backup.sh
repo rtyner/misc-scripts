@@ -1,3 +1,3 @@
 #!/bin/bash
 
-rsync -avlPog --delete --quiet /home/rt/ /mnt/2tb/arch
+rsync -av --delete /home/rt/ /home/rt/mnt/red/Backups/arch-lt
