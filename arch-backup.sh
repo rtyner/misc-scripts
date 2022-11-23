@@ -1,3 +1,3 @@
-#!/bin/bash
+#bin/bash
 
-rsync -av --delete /home/rt/ /home/rt/mnt/red/Backups/arch-lt
+rsync -av --delete --exclude '/home/rt/mnt' /home/rt/ /home/rt/mnt/red/Backups/arch-lt
